@@ -13,9 +13,10 @@ using Utp;
 namespace BNG {
     public class NetworkDemoUI : NetworkBehaviour
     {
-
+        [Header("Network Manager")]
         [SerializeField] private RelayNetworkManager networkManager;
 
+        [Header("Input Fields")]
         [SerializeField] private InputField PlayerNameInput;
         [SerializeField] private InputField RoomCodeInput;
 
@@ -32,9 +33,9 @@ namespace BNG {
         private bool isAuthenticated = false;
         private bool isAuthenticating = false;
         
-        private async void Start()
+        private void Start()
         {
-            await EnsureAuthentication();
+            _ = EnsureAuthentication();
         }
 
         private async Task EnsureAuthentication()
@@ -58,7 +59,7 @@ namespace BNG {
 
                 isAuthenticated = true;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Debug.LogError($"Unity Services authentication failed: {e.Message}");
             }
@@ -85,7 +86,6 @@ namespace BNG {
 
         public async void OnHostButton()
         {
-            Debug.Log("Host Button clicked");
             try
             {
                 DisplayText.text = "Attempting to host server... \n";
@@ -107,8 +107,6 @@ namespace BNG {
                 }
 
                 Debug.Log("Authentication successful");
-
-                HideConnectionUI();
                 
                 networkManager.StartRelayHost(4);
             }
@@ -144,8 +142,8 @@ namespace BNG {
             }
             
             PlayerPrefs.SetString("PlayerName", playerName);
-            
-            HideConnectionUI();
+
+            StartCoroutine(sceneLoader.FadeThenLoadScene());
 
             networkManager.JoinRelayServer(joinCode);
         }

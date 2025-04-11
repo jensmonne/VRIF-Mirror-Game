@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+
 namespace BNG {
     // this script is placed on the empty player object to hold all the possible player prefabs, when this spawns as the player it is
     // sent an index / int from the menu  for the index of the prefab the player wants
-    public class NetworkCharacterReplacement : NetworkBehaviour {
+    public class NetworkCharacterReplacement : NetworkBehaviour
+    {
         [System.Serializable]
         public class CharacterPrefabSet {
             public GameObject characterPrefab;
@@ -16,8 +18,7 @@ namespace BNG {
         [SerializeField] bool useOfflineCharacterSelect = true;
 
         private void Start() {
-            if (!useOfflineCharacterSelect || !isLocalPlayer)
-                return;
+            if (!useOfflineCharacterSelect || !isLocalPlayer) return;
 
             // Get the index of the player prefab from LocalPlayerData
             int playerIndex = LocalPlayerData.Instance.playerPrefabIndex;
@@ -27,10 +28,9 @@ namespace BNG {
         }
 
         [Command]
-        public void CmdReplaceCharacter(int characterIndex, NetworkConnectionToClient conn = null) {
-            if (conn == null) {
-                conn = connectionToClient;
-            }
+        public void CmdReplaceCharacter(int characterIndex, NetworkConnectionToClient conn = null)
+        {
+            conn ??= connectionToClient;
 
             if (characterIndex >= 0 && characterIndex < characterPrefabSets.Count) {
                 // Get the current player object
@@ -44,7 +44,6 @@ namespace BNG {
 
                 // Assign ownership of the new character to the client's connection
                 NetworkServer.ReplacePlayerForConnection(conn, newCharacter, ReplacePlayerOptions.KeepAuthority);
-
             } 
             else {
                 Debug.LogError("Invalid character index: " + characterIndex);
@@ -52,4 +51,3 @@ namespace BNG {
         }
     }
 }
-

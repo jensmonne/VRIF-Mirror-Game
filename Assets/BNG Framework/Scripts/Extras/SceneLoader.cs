@@ -31,8 +31,8 @@ namespace BNG {
             }
         }
 
-        public IEnumerator FadeThenLoadScene() {
-
+        public IEnumerator FadeThenLoadScene()
+        {
             if (UseSceenFader) {
                 if (sf == null) {
                     sf = FindObjectOfType<ScreenFader>();
@@ -48,6 +48,23 @@ namespace BNG {
             }
 
             SceneManager.LoadScene(_loadSceneName, loadSceneMode);
+        }
+
+        public IEnumerator FadeScreen()
+        {
+            if (UseSceenFader) {
+                if (sf == null) {
+                    sf = FindObjectOfType<ScreenFader>();
+                    // May not have found anything
+                    if (sf != null) {
+                        sf.DoFadeIn();
+                    }
+                }
+            }
+
+            if (ScreenFadeTime > 0) {
+                yield return new WaitForSeconds(ScreenFadeTime);
+            }
         }
     }
 }

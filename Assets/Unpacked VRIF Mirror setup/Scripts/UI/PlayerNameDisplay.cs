@@ -3,13 +3,11 @@ using Mirror;
 using TMPro;
 
 namespace BNG {
-    public class PlayerNameDisplay : NetworkBehaviour {
+    public class PlayerNameDisplay : NetworkBehaviour
+    {
+        [SerializeField] private TMP_Text playerNameText;
 
-        [SerializeField]
-        TMP_Text playerNameText;
-
-        [SerializeField]
-        Canvas PlayerInfoCanvas;
+        [SerializeField] private Canvas PlayerInfoCanvas;
 
         [Tooltip("If true this transform will always look at the Camera in Update")]
         public bool LookAtCamera = true;
@@ -25,19 +23,22 @@ namespace BNG {
         [SyncVar(hook = nameof(SetNetworkPlayerName))]
         public string networkPlayerName;
 
-        void Start() {
-            if (isOwned) {
-                // Retrieve our player name from local data
-                //localPlayerData = LocalPlayerData.Instance;
-                
-                localPlayerData = PlayerPrefs.GetString("PlayerName", "Unknown");
+        private Camera _camera;
 
-                // disable the player label over the local player
-                PlayerInfoCanvas.enabled = false;
-            }
+        private void Start()
+        {
+            _camera = Camera.main;
+            if (!isOwned) return;
+            // Retrieve our player name from local data
+            //localPlayerData = LocalPlayerData.Instance;
+                
+            localPlayerData = PlayerPrefs.GetString("PlayerName", "Unknown");
+
+            // disable the player label over the local player
+            PlayerInfoCanvas.enabled = false;
         }
 
-        void Update() {
+        private void Update() {
             CheckNameUpdate();
 
             if (LookAtCamera) {
@@ -68,13 +69,13 @@ namespace BNG {
             networkPlayerName = _npName;
         }
 
-        void SetNetworkPlayerName(string oldName, string newName) {
-            playerNameText.text = networkPlayerName.ToString();
+        private void SetNetworkPlayerName(string oldName, string newName) {
+            playerNameText.text = networkPlayerName;
         }
 
         public virtual void AssignCameraTransform() {
-            if (Camera.main != null) {
-                camTransform = Camera.main.transform;
+            if (_camera != null) {
+                camTransform = _camera.transform;
             }
         }
 

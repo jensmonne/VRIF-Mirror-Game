@@ -3,10 +3,11 @@ using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
 
-// script to handle authority switching of the grabbable so everyone can pickup items
+// Script to handle authority switching of the grabbable so everyone can pick up items
 namespace BNG {
     [RequireComponent(typeof(NetworkGrabbableEvents))]
-    public class NetworkGrabbable : NetworkBehaviour {
+    public class NetworkGrabbable : NetworkBehaviour
+    {
 
         [Header("Object Index to Be used With Scene Object Spawner")]
         [Tooltip("Index number must match the index in the list")]
@@ -33,13 +34,9 @@ namespace BNG {
 
         NetworkGrabbableEvents networkGrabbableEvents;
 
-        public NetworkIdentity NetIdentity {
-            get {
-                return netIdentity;
-            }
-        }
+        public NetworkIdentity NetIdentity => netIdentity;
 
-        void Awake() {
+        private void Awake() {
             rb = GetComponent<Rigidbody>();
             networkGrabbableEvents = GetComponent<NetworkGrabbableEvents>();
             grabbables.AddRange(GetComponentsInChildren<Grabbable>());
@@ -50,11 +47,8 @@ namespace BNG {
             }
         }
 
-        void Update() {
-
-            if (!NetworkServer.active) {
-                return;
-            }
+        private void Update() {
+            if (!NetworkServer.active) return;
 
             CheckResetGrabbableVelocity();
         }
@@ -84,13 +78,9 @@ namespace BNG {
         // Called from the NetworkGrabber component on the RemoteGrabber of the Network Rig
         public void PickUpEvent() {
             // Check to see if the object is being held, if so, abort
-            if (holdingStatus) {
-                return;
-            }
+            if (holdingStatus) return;
 
-            if (!isOwned) {
-                CmdPickup();
-            }
+            if (!isOwned) CmdPickup();
 
             StartCoroutine(WaitForOwnership());
         }
@@ -108,7 +98,7 @@ namespace BNG {
             // set with a timer to avoid leaving the coroutine in an endless loop waiting to be held
             while (true) {
                 if (!grabbables[0].BeingHeld) {
-                    timeNotHeld += UnityEngine.Time.deltaTime;
+                    timeNotHeld += Time.deltaTime;
 
                     if (timeNotHeld >= maxTime) {
                         yield break;
@@ -124,7 +114,7 @@ namespace BNG {
         }
 
         public void DropEventHoldFalse() {
-            // set the holding status to false when you let go so others can pick it up
+            // Set the holding status to false when you let go so others can pick it up
             CmdSetHoldingStatus(false);
         }
 
@@ -148,29 +138,24 @@ namespace BNG {
             holdingStatus = status;
         }
 
-
         public void DropItem() {
-
-            if(grabbables.Count > 0) {
+            if (grabbables.Count > 0) {
                 grabbables[0].DropItem(false, true);
             }
             
-            CmdSetHoldingStatus(false);
+            CmdSetHoldingStatus(false); 
             // transform.parent = null;
         }
 
         public void DropAndDestroyItem() {
             DropItem();
-
             CmdDestroyGrabbable();
         }
 
-
         [Command]
-        void CmdDestroyGrabbable() {
+        private void CmdDestroyGrabbable() {
             NetworkServer.Destroy(this.gameObject);
         }
-
 
         [Command(requiresAuthority = false)]
         public void CmdSetFlightStatus(bool currentStatus) {
@@ -191,20 +176,18 @@ namespace BNG {
 
         // Check to see if the object is owned by the server, if it is, reset the velocity and set the holding status to false
         [Server]
-        void CheckResetGrabbableVelocity() {
-            if (IsOwnedByServer() == true && holdingStatus == true) {
-                Debug.Log(string.Format("This object {0} is owned by the server. Resetting velocity.", transform.name));
+        private void CheckResetGrabbableVelocity() {
+            if (IsOwnedByServer() && holdingStatus) {
+                Debug.Log($"This object {transform.name} is owned by the server. Resetting velocity.");
                 ResetInteractableVelocity();
                 holdingStatus = false;
             }
         }
+        
         [Server]
-        public bool IsOwnedByServer() {
-            if (netIdentity != null && netIdentity.connectionToClient == null) {
-                return true;
-            }
-
-            return false;
+        public bool IsOwnedByServer()
+        {
+            return netIdentity != null && netIdentity.connectionToClient == null;
         }
     }
 }

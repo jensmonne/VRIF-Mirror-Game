@@ -1,22 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
 
 namespace BNG
 {
     public class QuitGameUI : NetworkBehaviour
     {
-
         public UnityEngine.UI.Button quitButton;
 
-        void Start()
+        private void Start()
         {
             quitButton.onClick.AddListener(QuitGame);
         }
-
         
-        void QuitGame()
+        private void QuitGame()
         {
             if (isClient)
             {

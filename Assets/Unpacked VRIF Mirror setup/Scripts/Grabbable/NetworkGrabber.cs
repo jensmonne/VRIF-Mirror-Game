@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG {
-    public class NetworkGrabber : MonoBehaviour {
+    public class NetworkGrabber : MonoBehaviour
+    {
 
         [Header("Set the hand side of the remote grabber")]
-        [SerializeField]
-        ControllerHand controllerHand;
+        [SerializeField] private ControllerHand controllerHand;
 
-        // fix for triggering pickup when hovering overitems whileholding and object causing rings to disappear
+        // Fix for triggering pickup when hovering over items while holding and object causing rings to disappear
         private Grabber grabber;
 
         private GrabbablesInTrigger grabInTrigger;
@@ -35,12 +34,9 @@ namespace BNG {
 
         private void Update()
         {
-            if (grabber.HeldGrabbable != null)
-            {
-                return;
-            }
+            if (grabber.HeldGrabbable != null) return;
 
-            if(grabInTrigger.ClosestRemoteGrabbable == null)
+            if (grabInTrigger.ClosestRemoteGrabbable == null)
             {
                 netGrabInTrigger = null;
             }
@@ -49,33 +45,31 @@ namespace BNG {
                 netGrabInTrigger = grabInTrigger.ClosestRemoteGrabbable.GetComponent<NetworkGrabbable>();
             }
 
-            if (netGrabInTrigger != null)
+            if (netGrabInTrigger == null) return;
+            
+            if (!authorityOnInput)
             {
-                if (!authorityOnInput)
+                if (pickUpCoroutine == null)
                 {
-                    if (pickUpCoroutine == null)
+                    pickUpCoroutine = StartCoroutine(HandlePickUpEvent());
+                }
+            }
+            else if (authorityOnInput)
+            {
+                // Change this input to suit your needs 
+                if (controllerHand == ControllerHand.Right && InputBridge.Instance.RightGripDown || controllerHand == ControllerHand.Left && InputBridge.Instance.LeftGripDown)
+                {
+                    if (!netGrabInTrigger.flightStatus)
                     {
-                        pickUpCoroutine = StartCoroutine(HandlePickUpEvent());
+                        netGrabInTrigger.CmdSetFlightStatus(true);
+                        netGrabInTrigger.PickUpEvent();
                     }
                 }
-                else if (authorityOnInput)
+                else if (controllerHand == ControllerHand.Right && !InputBridge.Instance.RightGripDown || controllerHand == ControllerHand.Left && !InputBridge.Instance.LeftGripDown)
                 {
-                    // Change this input to suit your needs 
-                    if (controllerHand == ControllerHand.Right && InputBridge.Instance.RightGripDown || controllerHand == ControllerHand.Left && InputBridge.Instance.LeftGripDown)
+                    if (netGrabInTrigger.flightStatus)
                     {
-                        if (!netGrabInTrigger.flightStatus)
-                        {
-                            netGrabInTrigger.CmdSetFlightStatus(true);
-                            netGrabInTrigger.PickUpEvent();
-                        }
-                    }
-                    else if (controllerHand == ControllerHand.Right && !InputBridge.Instance.RightGripDown || controllerHand == ControllerHand.Left && !InputBridge.Instance.LeftGripDown)
-                    {
-
-                        if (netGrabInTrigger.flightStatus)
-                        {
-                            netGrabInTrigger.CmdSetFlightStatus(false);
-                        }
+                        netGrabInTrigger.CmdSetFlightStatus(false);
                     }
                 }
             }
@@ -101,6 +95,5 @@ namespace BNG {
 
             pickUpCoroutine = null;
         }
-
     }
 }
