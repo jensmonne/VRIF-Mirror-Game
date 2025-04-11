@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG
 {
-    // scritp to save and load data from playerprefs
+    // Script to save and load data from PlayerPrefs
     public class SaveLoadData : MonoBehaviour
     {
         public static SaveLoadData Instance
@@ -29,19 +27,19 @@ namespace BNG
         [Header("Player Name Input field on the Menu")]
         public UnityEngine.UI.InputField playerNameInputField;
    
-        void Start()
+        private void Start()
         {
             localPlayerData = LocalPlayerData.Instance;
             LoadFromPrefs();
         }
 
-        void LoadFromPrefs()
+        private void LoadFromPrefs()
         {   
-            // load saved player name and load it menu input and local player data
+            // Load saved player name and load it to the menu input and local player data
             string playerName = (string)LoadPlayerPref("PlayerName", "Unknown");
             if (playerName != "Unknown")
             {
-                localPlayerData.PlayerName = playerName;
+                localPlayerData.playerName = playerName;
                 playerNameInputField.text = playerName;
             }
             int playerPrefab = (int)LoadPlayerPref("PrefabIndex", 0);
@@ -52,47 +50,41 @@ namespace BNG
             localPlayerData.propTextureIndex = playerPropTexture;
         }
 
-        // function called from LoadFromPrefs 
+        // Function called from LoadFromPrefs
         public object LoadPlayerPref(string key, object defaultValue)
         {
-            if (defaultValue is int)
+            return defaultValue switch
             {
-                return PlayerPrefs.GetInt(key, (int)defaultValue);
-            }
-            else if (defaultValue is float)
-            {
-                return PlayerPrefs.GetFloat(key, (float)defaultValue);
-            }
-            else if (defaultValue is string)
-            {
-                return PlayerPrefs.GetString(key, (string)defaultValue);
-            }
-            else
-            {
-                Debug.LogError("Unsupported type for PlayerPrefs");
-                return null;
-            }
+                int i => PlayerPrefs.GetInt(key, i),
+                float f => PlayerPrefs.GetFloat(key, f),
+                string s => PlayerPrefs.GetString(key, s),
+                _ => LogAndReturnNull()
+            };
+        }
+        
+        private object LogAndReturnNull()
+        {
+            Debug.LogError("Unsupported type for PlayerPrefs");
+            return null;
         }
 
-        // call this function to save a pref
+        // Call this function to save a pref
         public void SavePlayerPref(string key, object value)
         {
-            if (value is int)
+            switch (value)
             {
-                PlayerPrefs.SetInt(key, (int)value);
-            }
-            else if (value is float)
-            {
-                PlayerPrefs.SetFloat(key, (float)value);
-            }
-            else if (value is string)
-            {
-                PlayerPrefs.SetString(key, (string)value);
-            }
-            else
-            {
-                Debug.LogError("Unsupported type for PlayerPrefs");
-                return;
+                case int i:
+                    PlayerPrefs.SetInt(key, i);
+                    break;
+                case float f:
+                    PlayerPrefs.SetFloat(key, f);
+                    break;
+                case string s:
+                    PlayerPrefs.SetString(key, s);
+                    break;
+                default:
+                    Debug.LogError("Unsupported type for PlayerPrefs");
+                    break;
             }
 
             PlayerPrefs.Save(); 
