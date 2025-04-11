@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BNG {
-    public class ScreenFader : MonoBehaviour {
+    public class ScreenFader : MonoBehaviour
+    {
 
         [Tooltip("Should the screen fade in when a new level is loaded")]
         public bool FadeOnSceneLoaded = true;
@@ -31,7 +32,7 @@ namespace BNG {
         string faderName = "ScreenFader";
 
 
-        void Awake() {
+        private void Awake() {
             initialize();
         }
 
@@ -73,15 +74,15 @@ namespace BNG {
             }
         }
 
-        void OnEnable() {
+        private void OnEnable() {
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        void OnDisable() {
+        private void OnDisable() {
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 
             if (FadeOnSceneLoaded && fadeObject != null) {
                 // Start screen at fade

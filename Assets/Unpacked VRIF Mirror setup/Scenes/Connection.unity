@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &137205254
 RectTransform:
   m_ObjectHideFlags: 0
@@ -151,10 +151,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 972860247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -69.16667}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 850, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &137205255
 MonoBehaviour:
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Set your player name and host or connect to a server
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -203,10 +203,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.1
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -639,6 +639,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &698957860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698957862}
+  - component: {fileID: 698957861}
+  m_Layer: 0
+  m_Name: Authenticator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &698957861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698957860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217ebbe8999d932489f8d2ef4a8ea601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &698957862
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698957860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2743277, y: 0.20256719, z: 6.487874}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758297841
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +765,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 758297844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1708568902087178303}
+        m_TargetAssemblyTypeName: BNG.NetworkDemoUI, Assembly-CSharp
+        m_MethodName: OnOfflineButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &758297844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,7 +898,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 760105965}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1708568902087178303}
+        m_TargetAssemblyTypeName: BNG.NetworkDemoUI, Assembly-CSharp
+        m_MethodName: OnConnectButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &760105965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,7 +1552,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 896465347}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1708568902087178303}
+        m_TargetAssemblyTypeName: BNG.NetworkDemoUI, Assembly-CSharp
+        m_MethodName: OnHostButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &896465347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,7 +1798,7 @@ MonoBehaviour:
   editorAutoStart: 0
   sendRate: 60
   offlineScene: Assets/Unpacked VRIF Mirror setup/Scenes/Connection.unity
-  onlineScene: Assets/Scenes/Store.unity
+  onlineScene: Assets/Scenes/SampleScene.unity
   offlineSceneLoadDelay: 0
   transport: {fileID: 1169310426}
   networkAddress: localhost
@@ -2196,6 +2276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1443477357}
+  - component: {fileID: 1443477358}
   m_Layer: 0
   m_Name: LobbyPanel
   m_TagString: Untagged
@@ -2222,6 +2303,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 1080, y: 1380}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1443477358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443477356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1534731038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,6 +2417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632252680}
+  - component: {fileID: 1632252681}
   m_Layer: 0
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -2336,6 +2444,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 1080, y: 1380}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1632252681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632252679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1670255247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,6 +3393,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
         type: 3}
+      propertyPath: displayText
+      value: 
+      objectReference: {fileID: 137205255}
+    - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
+        type: 3}
       propertyPath: ConnectButton
       value: 
       objectReference: {fileID: 0}
@@ -3269,12 +3408,22 @@ PrefabInstance:
       objectReference: {fileID: 1670255249}
     - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
         type: 3}
+      propertyPath: roomCodeInput
+      value: 
+      objectReference: {fileID: 1670255249}
+    - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
+        type: 3}
       propertyPath: networkManager
       value: 
       objectReference: {fileID: 1169310424}
     - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
         type: 3}
       propertyPath: PlayerNameInput
+      value: 
+      objectReference: {fileID: 1670494622}
+    - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
+        type: 3}
+      propertyPath: playerNameInput
       value: 
       objectReference: {fileID: 1670494622}
     - target: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
@@ -3332,6 +3481,18 @@ PrefabInstance:
       addedObject: {fileID: 1679795632}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39be21d5bff44344b8c101f85c5693c3, type: 3}
+--- !u!114 &1708568902087178303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7172736741521925977, guid: 39be21d5bff44344b8c101f85c5693c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1708568902087178302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e78ff9102ecc347b83caf384d8ae0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8497405185981803039 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8373326930265216539, guid: 39be21d5bff44344b8c101f85c5693c3,
@@ -3348,8 +3509,9 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 698957862}
   - {fileID: 821443741}
   - {fileID: 344938780}
-  - {fileID: 1708568902087178302}
   - {fileID: 1169310425}
+  - {fileID: 1708568902087178302}
   - {fileID: 564248454}
