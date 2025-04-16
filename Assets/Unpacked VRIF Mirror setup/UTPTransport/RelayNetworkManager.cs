@@ -93,7 +93,7 @@ namespace Utp
 		/// <summary>
 		/// Ensures Relay is enabled. Starts a network "host" - a server and client in the same application
 		/// </summary>
-		public void StartRelayHost(int maxPlayers, string regionId = null)
+		public void StartRelayHost(int maxPlayers, Action onSuccess, string regionId = null)
 		{
 			utpTransport.useRelay = true;
 			utpTransport.AllocateRelayServer(maxPlayers, regionId,
@@ -103,6 +103,7 @@ namespace Utp
 				Debug.LogError($"Relay JoinCode: {joinCode}");
 				PlayerPrefs.SetString("RoomCode", joinCode);
 				StartHost();
+				onSuccess?.Invoke();
 			},
 			() =>
 			{

@@ -19,6 +19,7 @@ namespace BNG
         [SerializeField] private ScreenFader screenFader;
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private UITabSwitcher tabSwitcher;
+        [SerializeField] private LobbyNetworkUI lobbyNetworkUI;
         
         private bool clientConnected;
 
@@ -46,16 +47,21 @@ namespace BNG
 
             if (!UnityAuthInitializer.IsAuthenticated)
             {
-                Debug.LogError("The FUCKING AUTO AUTHENTICATION IS NOT WORKING!!! RQAAAAAAHHFH, i swear i am gonna tell my mom");
-                statusText.text = "Not Authenticated... You cannot do anything about it yet!\n";
+                statusText.text = "Not Authenticated.\n";
                 return;
             }
             
-            // Need to change this so i can show the players in the lobby tab and let people connect before the game starts :D
-            // Also need to do a loading screen of some sort here
-            networkManager.StartRelayHost(4);
+            int delay = 10;
             
-            tabSwitcher.ShowLobby();
+            statusText.text += "Starting Relay Host...\n";
+            
+            // Now you are connected to the lobby but the scene does not change
+            // TODO: Lets you choose the maxPlayers
+            networkManager.StartRelayHost(4, () =>
+            {
+                tabSwitcher.ShowLobby();
+                lobbyNetworkUI.OnHost();
+            });
         }
 
         /// <summary>
@@ -96,18 +102,7 @@ namespace BNG
             
             tabSwitcher.ShowLobby();
             
-            
-        }
-        
-        /// <summary>
-        /// Disconnects the client or host from the network session.
-        /// </summary>
-        public void OnDisconnectButton()
-        {
-            if (isClient) networkManager.StopClient();
-            if (isServer) networkManager.StopHost();
-            
-            tabSwitcher.ShowConnect();
+            lobbyNetworkUI.OnConnect();
         }
         
         /// <summary>

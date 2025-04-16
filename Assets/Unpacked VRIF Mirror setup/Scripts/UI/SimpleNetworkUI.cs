@@ -101,7 +101,10 @@ namespace BNG {
             
             screenFader.DoFadeIn();
             
-            networkManager.StartRelayHost(4);
+            networkManager.StartRelayHost(4, () =>
+            {
+                displayText.text += "Hosting server...\n";
+            });
         }
 
         public async void OnConnectButton()
